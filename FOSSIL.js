@@ -14,7 +14,7 @@
 
  * @help FOSSIL goes at the start, before all other plugins.
 
-Fixing Old Software / Special Interoperability Layer (FOSSIL) Version 1.0.13
+Fixing Old Software / Special Interoperability Layer (FOSSIL) Version 1.9.0.0
 
 FOSSIL is an interoperability plugin.  
 The purpose of this layer is to expand the use and usefulness of RPG MAKER 
@@ -429,8 +429,8 @@ et cetera) as well as your game as a whole are *not* considered to be
  
  //instead of mucking around with plugin order, this will inject the code to precisely where it needs to go
 //...hopefully.
-var Fossil =Fossil || {}
-Fossil.version='1.0.12'
+var Fossil =Fossil || {};
+Fossil.version = "1.9.0.0";
 
 //outer block testing scriptUrls exists so Fossil can act as a replacement for main.js
 //don't futz with it
@@ -2297,12 +2297,28 @@ fossilStaticFixes = function(){
 	Window_Base.prototype.textPadding = function() {
 		return 6;
 	};
+	
+	Object.defineProperties(Window_Base, 
+	{
+		_iconWidth: { get: function(){ return ImageManager.iconWidth; }, configurable: true },
+		_iconHeight: { get: function(){ return ImageManager.iconHeight; }, configurable: true },
+		_faceWidth: { get: function(){ return ImageManager.faceWidth; }, configurable: true },
+		_faceHeight: { get: function(){ return ImageManager.faceHeight; }, configurable: true },
+	});
+	Object.defineProperties(Sprite_StateIcon, 
+	{
+		_iconWidth: { get: function(){ return ImageManager.iconWidth; }, configurable: true },
+		_iconHeight: { get: function(){ return ImageManager.iconHeight; }, configurable: true },
+	});
+	
+/*	
 	Window_Base._iconWidth = ImageManager.iconWidth;
 	Window_Base._iconHeight = ImageManager.iconHeight;
-	Window_Base._faceWidth = ImageManager.faceWidth
-	Window_Base._faceHeight = ImageManager.faceHeight
+	Window_Base._faceWidth = ImageManager.faceWidth;
+	Window_Base._faceHeight = ImageManager.faceHeight;
 	Sprite_StateIcon._iconWidth = ImageManager.iconWidth;
 	Sprite_StateIcon._iconHeight = ImageManager.iconHeight;
+*/
 
 	Window_Base.prototype.standardPadding = function() {
 		return 18;
@@ -7895,7 +7911,7 @@ if(typeof(scriptUrls)=="undefined")
 	//
 	
 	//tell people they are running in FOSSIL.
-	console.log('FOSSIL is now running as main.')
+	console.log("FOSSIL v" + Fossil.version + " is now running as main.");
 
 	//=============================================================================
 	// main.js v1.2.1
